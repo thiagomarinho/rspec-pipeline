@@ -1,0 +1,6 @@
+require 'pipelinespec/matcher/run_when.rb'
+require 'pipelinespec/matcher/run_on_success.rb'
+require 'pipelinespec/matcher/run_on_failure.rb'
+require 'pipelinespec/matcher/run_on_success_or_failure.rb'
+require 'pipelinespec/matcher/run_always.rb'
+require 'pipelinespec/matcher/run_after.rb'
