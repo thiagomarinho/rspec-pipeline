@@ -16,7 +16,7 @@ stages:
         name: Publish
         condition: succeededOrFailed()
 
-- stage: DeployToDv
+- stage: DeployToDev
   dependsOn: Build
   jobs:
   - job: B1
@@ -24,7 +24,21 @@ stages:
     - bash: echo "Hello world"
 
 - stage: DeployToCi
-  dependsOn: DeployToDv
+  dependsOn: DeployToDev
+  jobs:
+  - job: B1
+    steps:
+    - bash: echo "Hello world"
+
+- stage: DeployToStage
+  dependsOn: DeployToCi
+  jobs:
+  - job: B1
+    steps:
+    - bash: echo "Hello world"
+
+- stage: DeployToProd
+  dependsOn: DeployToStage
   jobs:
   - job: B1
     steps:

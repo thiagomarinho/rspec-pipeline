@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["eu@thiagomarinho.net"]
 
   spec.summary       = "Pipelinespec helps you to write and test your pipeline manifests"
-  spec.homepage      = "https://thiagomarinho.net/pipelinespec"
+  spec.homepage      = "https://github.com/thiagomarinho/pipelinespec"
   spec.license       = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 

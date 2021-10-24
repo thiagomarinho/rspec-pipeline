@@ -1,8 +1,7 @@
 require 'yaml'
 
 def pipeline
-  # TODO should we get filename from describe?
-  YAML.load_file('two-stages.yml')
+  YAML.load_file(pipeline_name)
 end
 
 def stage(name)
@@ -45,6 +44,10 @@ def push_to_branch(name)
     'branch' => name,
     'condition' => "eq(variables['build.sourceBranch'], 'refs/heads/#{name}'"
   }
+end
+
+def push_to_master
+  push_to_branch 'master'
 end
 
 def pull_request

@@ -1,8 +1,8 @@
 # Pipelinespec
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/pipelinespec`. To experiment with that code, run `bin/console` for an interactive prompt.
+Create tests for your pipelines to validate dependencies between blocks and other characteristics.
 
-TODO: Delete this and the text above, and describe your gem
+> Only Azure YAML Pipelines are supported at the moment.
 
 ## Installation
 
@@ -14,15 +14,51 @@ gem 'pipelinespec'
 
 And then execute:
 
-    $ bundle install
+```shell
+$ bundle install
+```
 
 Or install it yourself as:
 
-    $ gem install pipelinespec
+```shell
+$ gem install pipelinespec
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+Add this at the beginning of your spec_helper.rb:
+
+```ruby
+require 'pipelinespec'
+```
+
+When writing your test you can use the keywords `pipeline`, `stage`, `job` and `step` as example groups, and the example's `subject` will be the corresponding item, filtered by its description. For example:
+
+```ruby
+pipeline 'pipeline.yml' do
+  stage 'DeployToDev' do
+    it { is_expected.to run_after('Build') }
+  end
+end
+```
+
+The test will pass if your pipeline is defined like this:
+
+```yaml
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    steps:
+      - bash: echo "Build"
+
+- stage: DeployToDev
+  dependsOn: Build
+  jobs:
+  - job: B1
+    steps:
+    - bash: echo "Deploy to Dev"
+```
 
 ## Development
 
@@ -32,7 +68,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/pipelinespec.
+Bug reports and pull requests are welcome on GitHub at https://github.com/thiagomarinho/pipelinespec.
 
 ## License
 
