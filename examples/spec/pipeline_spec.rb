@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 pipeline 'pipeline.yml' do
   stage 'Build' do
     job 'SecurityScan' do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :run_after do |thing|
   match do |actual|
     if actual['dependsOn'].is_a?(Array)
@@ -5,10 +7,10 @@ RSpec::Matchers.define :run_after do |thing|
     else
       actual['dependsOn'] == thing
     end
-
   end
 
-  failure_message do |event|
-    "#{actual['blockType']} \"#{actual['blockName']}\" was expected to depend on #{actual['blockType']} \"#{thing}\" but depends on \"#{actual['dependsOn']}\" instead."
+  failure_message do |_event|
+    "#{actual['blockType']} \"#{actual['blockName']}\" was expected to depend on #{actual['blockType']} \"#{thing}\"" \
+      "but depends on \"#{actual['dependsOn']}\" instead."
   end
 end

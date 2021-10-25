@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'yaml'
 
 def pipeline
@@ -5,7 +7,7 @@ def pipeline
 end
 
 def stage(name)
-  stage = pipeline['stages'].find { |stage| stage['stage'] == name }
+  stage = pipeline['stages'].find { |item| item['stage'] == name }
 
   raise "Stage not found: #{name}" if stage.nil?
 
@@ -16,7 +18,7 @@ def stage(name)
 end
 
 def job(stage_name, name)
-  job = stage(stage_name)['jobs'].find { |job| job['job'] == name }
+  job = stage(stage_name)['jobs'].find { |item| item['job'] == name }
 
   raise "Job not found: #{name}" if job.nil?
 
@@ -27,7 +29,7 @@ def job(stage_name, name)
 end
 
 def step(stage_name, job_name, name)
-  step = job(stage_name, job_name)['steps'].find { |step| step['name'] == name }
+  step = job(stage_name, job_name)['steps'].find { |item| item['name'] == name }
 
   raise "Step not found: #{name}" if step.nil?
 
