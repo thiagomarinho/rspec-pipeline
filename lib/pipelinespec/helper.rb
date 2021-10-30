@@ -5,6 +5,44 @@ require 'yaml'
 def pipeline
   pipeline = YAML.load_file(pipeline_name)
 
+  pipeline['stages'] = evaluate_stages(pipeline)
+
+  pipeline['stages'].each do |stage|
+    stage['jobs'] = evaluate_jobs(stage)
+
+    stage['jobs'].each do |job|
+      job['steps'] = evaluate_steps(job)
+    end
+  end
+
+  pipeline
+end
+
+def evaluate_steps(job)
+  templated_steps = job['steps'].map do |step|
+    if step['template']
+      load_template('steps', step['template'], step['parameters'])
+    else
+      step
+    end
+  end
+
+  templated_steps.flatten.compact
+end
+
+def evaluate_jobs(stage)
+  templated_jobs = stage['jobs'].map do |job|
+    if job['template']
+      load_template('jobs', job['template'], job['parameters'])
+    else
+      job
+    end
+  end
+
+  templated_jobs.flatten.compact
+end
+
+def evaluate_stages(pipeline)
   templated_stages = pipeline['stages'].map do |stage|
     if stage['template']
       load_template('stages', stage['template'], stage['parameters'])
@@ -13,48 +51,20 @@ def pipeline
     end
   end
 
-  pipeline['stages'] = templated_stages.flatten.compact
-
-  pipeline['stages'].each do |stage|
-    templated_jobs = stage['jobs'].map do |job|
-      if job['template']
-        load_template('jobs', job['template'], job['parameters'])
-      else
-        job
-      end
-    end
-
-    stage['jobs'] = templated_jobs.flatten.compact
-
-    stage['jobs'].each do |job|
-      templated_steps = job['steps'].map do |step|
-        if step['template']
-          load_template('steps', step['template'], step['parameters'])
-        else
-          step
-        end
-      end
-
-      job['steps'] = templated_steps.flatten.compact
-    end
-  end
-
-  pipeline
+  templated_stages.flatten.compact
 end
 
 def load_template(template_type, template, parameters)
   template_content = File.read(template)
 
-  if parameters
-    parameters.each do |key, value|
-      template_content = template_content.gsub("${{ parameters.#{key} }}", value)
-    end
+  parameters&.each do |key, value|
+    template_content = template_content.gsub("${{ parameters.#{key} }}", value)
   end
 
-  yaml_template = YAML.load(template_content)
+  yaml_template = YAML.safe_load(template_content)
 
-  # TODO handle parameter default values
-  # TODO validate parameters
+  # TODO: handle parameter default values
+  # TODO: validate parameters
   # - throw SyntaxError: parameter used but not defined
 
   validate_parameters_not_found(parameters, yaml_template)
@@ -64,13 +74,23 @@ def load_template(template_type, template, parameters)
 end
 
 def validate_parameters_not_found(parameters, yaml_template)
-  parameters_not_found = (parameters || {}).keys - (yaml_template['parameters'] || []).map { |parameter| parameter['name'] }
-  raise "These parameters have been defined when you called the template but they are not in the template: #{parameters_not_found.join(', ')}" unless parameters_not_found.empty?
+  parameters_not_found = (parameters || {}).keys -
+                         (yaml_template['parameters'] || []).map { |parameter| parameter['name'] }
+
+  unless parameters_not_found.empty? # rubocop:disable Style/GuardClause
+    raise 'These parameters have been defined when you called the template but ' \
+      "they are not in the template: #{parameters_not_found.join(', ')}"
+  end
 end
 
 def validate_required_parameters_not_defined(parameters, yaml_template)
-  required_parameters_not_defined = (yaml_template['parameters'] || []).map { |parameter| parameter['name'] } - (parameters || {}).keys
-  raise "These parameters doesn't have default values but are not being defined when you called the template: #{required_parameters_not_defined.join(', ')}" unless required_parameters_not_defined.empty?
+  required_parameters_not_defined = (yaml_template['parameters'] || []).map { |parameter| parameter['name'] } -
+                                    (parameters || {}).keys
+
+  unless required_parameters_not_defined.empty? # rubocop:disable Style/GuardClause
+    raise "These parameters doesn't have default values but are not being defined when you called the " \
+      "template: #{required_parameters_not_defined.join(', ')}"
+  end
 end
 
 def stage(name)
@@ -99,7 +119,7 @@ def step(stage_name, job_name, name)
   job_to_search = job(stage_name, job_name)
   raise "Job #{job_name} doesn't have steps" unless job_to_search['steps']
 
-  step = job_to_search['steps'].find {|item| item['name'] == name }
+  step = job_to_search['steps'].find { |item| item['name'] == name }
   raise "Step not found: #{name} (available: #{job_to_search['steps'].map { |item| item['name'] }})" if step.nil?
 
   step['blockType'] = 'Step'
