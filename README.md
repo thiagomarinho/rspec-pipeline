@@ -60,6 +60,12 @@ stages:
     - bash: echo "Deploy to Dev"
 ```
 
+Please go to the `examples` folder to see a few more use cases.
+
+### About remote templates
+
+Note that if you try to use a template from a remote git repository you need to have clone permission and your git credentials configured if it is a private repository.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
