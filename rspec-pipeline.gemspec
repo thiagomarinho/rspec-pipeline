@@ -4,11 +4,11 @@ require_relative 'lib/rspec/pipeline/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'rspec-pipeline'
-  spec.version       = Rspec::Pipeline::VERSION
+  spec.version       = RSpec::Pipeline::VERSION
   spec.authors       = ['Thiago Marinho']
   spec.email         = ['eu@thiagomarinho.net']
 
-  spec.summary       = 'Pipelinespec helps you to write and test your pipeline manifests'
+  spec.summary       = 'RSpec-Pipeline helps you to write and test your pipeline manifests'
   spec.homepage      = 'https://github.com/thiagomarinho/rspec-pipeline'
   spec.license       = 'MIT'
   spec.required_ruby_version = '>= 2.6.0'

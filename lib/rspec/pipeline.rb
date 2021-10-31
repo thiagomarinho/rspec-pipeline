@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 require_relative 'pipeline/version'
-require 'pipeline/matcher'
-require 'pipeline/helper'
-require 'pipeline/context'
-require 'pipeline/fixture_loader'
 
-module Rspec::Pipeline
+module RSpec::Pipeline # rubocop:disable Style/ClassAndModuleChildren
   class Error < StandardError; end
 end
 
@@ -24,6 +20,7 @@ RSpec.configure do |config|
   config.add_setting :fixtures_repos, default: []
 
   config.before(:all) do
-    Rspec::Pipeline::FixtureLoader.load if RSpec.configuration.setup_fixtures? && RSpec.configuration.fixtures_repos.any?
+    RSpec::Pipeline::FixtureLoader.load if RSpec.configuration.setup_fixtures? &&
+                                           RSpec.configuration.fixtures_repos.any?
   end
 end

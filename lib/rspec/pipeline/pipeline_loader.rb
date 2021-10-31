@@ -2,7 +2,7 @@
 
 require 'yaml'
 
-module Rspec::Pipeline
+module RSpec::Pipeline # rubocop:disable Style/ClassAndModuleChildren
   # This class loads the pipeline from a YAML file, also calling required methods to
   # evaluate templates.
   class PipelineLoader

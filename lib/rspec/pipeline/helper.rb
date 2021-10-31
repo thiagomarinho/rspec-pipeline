@@ -4,7 +4,7 @@ require_relative 'pipeline_loader'
 require_relative 'template_loader'
 
 def pipeline
-  pipeline = Rspec::Pipeline::PipelineLoader.new(pipeline_name)
+  pipeline = RSpec::Pipeline::PipelineLoader.new(pipeline_name)
 
   pipeline.load
 end

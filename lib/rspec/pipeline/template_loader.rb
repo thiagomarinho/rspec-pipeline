@@ -5,7 +5,7 @@ require 'yaml'
 # TODO: handle parameter default values
 # TODO: validate parameters
 # - throw SyntaxError: parameter used but not defined
-module Rspec::Pipeline
+module RSpec::Pipeline # rubocop:disable Style/ClassAndModuleChildren
   # This class loads and validates templates from YAML files.
   class TemplateLoader
     def initialize

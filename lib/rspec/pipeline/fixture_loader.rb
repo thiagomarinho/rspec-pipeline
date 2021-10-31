@@ -2,7 +2,7 @@
 
 require 'fileutils'
 
-module Rspec::Pipeline
+module RSpec::Pipeline # rubocop:disable Style/ClassAndModuleChildren
   # This class configures and loads fixtures. It this moment, the only fixtures we have are repositories usually
   # utilized for remote templates.
   class FixtureLoader

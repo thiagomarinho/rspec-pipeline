@@ -2,5 +2,5 @@
 
 source 'https://rubygems.org'
 
-gem 'rspec-pipeline', path: '../..'
 gem 'rspec'
+gem 'rspec-pipeline', path: '../..'
