@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in pipelinespec.gemspec
+# Specify your gem's dependencies in rspec-pipeline.gemspec
 gemspec
 
 gem 'rake', '~> 13.0'

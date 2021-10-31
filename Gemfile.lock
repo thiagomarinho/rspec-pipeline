@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pipelinespec (0.3.0)
+    rspec-pipeline (0.3.0)
       byebug
 
 GEM
@@ -48,9 +48,9 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  pipelinespec!
   rake (~> 13.0)
   rspec (~> 3.0)
+  rspec-pipeline!
   rubocop (~> 1.21)
 
 BUNDLED WITH

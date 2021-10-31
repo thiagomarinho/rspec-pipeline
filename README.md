@@ -1,4 +1,4 @@
-# Pipelinespec
+# RSpec tests for your pipelines
 
 Create tests for your pipelines to validate dependencies between blocks and other characteristics.
 
@@ -9,7 +9,7 @@ Create tests for your pipelines to validate dependencies between blocks and othe
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'pipelinespec'
+gem 'rspec-pipeline'
 ```
 
 And then execute:
@@ -21,7 +21,7 @@ $ bundle install
 Or install it yourself as:
 
 ```shell
-$ gem install pipelinespec
+$ gem install rspec-pipeline
 ```
 
 ## Usage
@@ -29,7 +29,7 @@ $ gem install pipelinespec
 Add this at the beginning of your spec_helper.rb:
 
 ```ruby
-require 'pipelinespec'
+require 'rspec-pipeline'
 ```
 
 When writing your test you can use the keywords `pipeline`, `stage`, `job` and `step` as example groups, and the example's `subject` will be the corresponding item, filtered by its description. For example:
@@ -74,7 +74,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/thiagomarinho/pipelinespec.
+Bug reports and pull requests are welcome on GitHub at https://github.com/thiagomarinho/rspec-pipeline.
 
 ## License
 

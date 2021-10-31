@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-gem 'pipelinespec', path: '../..'
+source 'https://rubygems.org'
+
+gem 'rspec-pipeline', path: '../..'
 gem 'rspec'

@@ -2,7 +2,7 @@
 
 require 'yaml'
 
-module Pipelinespec
+module Rspec::Pipeline
   # This class loads the pipeline from a YAML file, also calling required methods to
   # evaluate templates.
   class PipelineLoader

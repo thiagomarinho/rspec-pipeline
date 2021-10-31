@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative 'pipelinespec/version'
-require 'pipelinespec/matcher'
-require 'pipelinespec/helper'
-require 'pipelinespec/context'
-require 'pipelinespec/fixture_loader'
+require_relative 'pipeline/version'
+require 'pipeline/matcher'
+require 'pipeline/helper'
+require 'pipeline/context'
+require 'pipeline/fixture_loader'
 
-module Pipelinespec
+module Rspec::Pipeline
   class Error < StandardError; end
 end
 
@@ -24,6 +24,6 @@ RSpec.configure do |config|
   config.add_setting :fixtures_repos, default: []
 
   config.before(:all) do
-    Pipelinespec::FixtureLoader.load if RSpec.configuration.setup_fixtures? && RSpec.configuration.fixtures_repos.any?
+    Rspec::Pipeline::FixtureLoader.load if RSpec.configuration.setup_fixtures? && RSpec.configuration.fixtures_repos.any?
   end
 end

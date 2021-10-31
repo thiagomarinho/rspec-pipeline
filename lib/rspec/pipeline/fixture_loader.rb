@@ -2,7 +2,7 @@
 
 require 'fileutils'
 
-module Pipelinespec
+module Rspec::Pipeline
   # This class configures and loads fixtures. It this moment, the only fixtures we have are repositories usually
   # utilized for remote templates.
   class FixtureLoader
